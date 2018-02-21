@@ -61,3 +61,30 @@ python manage.py sqlmigrate polls 0001 # No use, give sql
 python manage.py migrate
 python manage.py shell # Play with db api
 ```
+
+### Database API
+```python
+>>> from polls.models import Question, Choice   # Import the model classes we just wrote.
+>>> from django.utils import timezone
+>>> q = Question(question_text="What's new?", pub_date=timezone.now())
+>>> q.save()
+>>> q.id
+>>> Question.objects.all()
+<QuerySet [<Question: Question object (1)>]>
+>>> Question.objects.filter(question_text__startswith='What')
+```
+
+### Admin
+```
+$ python manage.py createsuperuser
+```
+
+To include in admin panel:
+```python
+# polls/admin.py
+from django.contrib import admin
+
+from .models import Question
+
+admin.site.register(Question)
+```
